@@ -1,0 +1,42 @@
+name: Publish screen page
+# ينشر واجهة شاشة المكتب على GitHub Pages.
+# لو Pages غير مفعّلة بعد (Settings → Pages → Source: GitHub Actions) يتخطى النشر بدون فشل.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency: { group: pages, cancel-in-progress: true }
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.p.outputs.enabled }}
+    steps:
+      - id: p
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          if gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null | grep -q workflow; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::GitHub Pages غير مفعّلة بمصدر GitHub Actions — تم تخطي النشر."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+  deploy:
+    needs: check
+    if: needs.check.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: '${{ steps.d.outputs.page_url }}' }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare site
+        run: |
+          mkdir -p _site
+          rsync -a --exclude .git --exclude .github --exclude tests --exclude node_modules --exclude package.json --exclude '*.md' --exclude .gitignore ./ _site/
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: _site }
+      - id: d
+        uses: actions/deploy-pages@v4

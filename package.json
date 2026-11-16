@@ -1,0 +1,13 @@
+{
+  "name": "rumaar-office-screen",
+  "private": true,
+  "description": "واجهة شاشة مكتب رونق الإعمار",
+  "scripts": {
+    "serve": "python3 -m http.server 8765 --bind 127.0.0.1",
+    "test": "node tests/run.cjs"
+  },
+  "devDependencies": {
+    "jsqr": "1.4.0",
+    "playwright": "^1.40.0"
+  }
+}

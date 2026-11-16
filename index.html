@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>رونق الإعمار — شاشة المكتب</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="off">
+    <!-- 1) الشريط العلوي -->
+    <header class="top">
+      <div class="top__brand">
+        <img id="logo" class="top__logo" alt="">
+        <div class="top__names">
+          <div id="brandName" class="top__name"></div>
+          <div id="brandLegal" class="top__legal"></div>
+        </div>
+      </div>
+      <div id="welcome" class="top__welcome"></div>
+      <div class="top__time">
+        <div id="clock" class="top__clock"></div>
+        <div id="dateLine" class="top__date"></div>
+      </div>
+    </header>
+
+    <!-- 2) نافذة العرض + شريط التحكّم -->
+    <main class="stage">
+      <section class="viewer-wrap">
+        <div id="viewer" class="viewer" aria-label="نافذة العرض">
+          <div id="viewerLayers" class="viewer__layers"></div>
+          <div id="sourceChip" class="chip" role="status" aria-live="polite">
+            <span class="chip__dot"></span><span class="chip__icon"></span><span class="chip__text"></span>
+          </div>
+          <div id="netChip" class="chip chip--net" role="status" hidden>
+            <span class="chip__icon"></span><span class="chip__text">لا يوجد اتصال بالإنترنت — يُعرض المحتوى المحلي</span>
+          </div>
+          <div id="projectStrip" class="strip" hidden>
+            <div class="strip__name"></div>
+            <div class="strip__meta"><span class="strip__loc"></span><span class="strip__sep">•</span><span class="strip__scope"></span></div>
+          </div>
+        </div>
+        <nav id="controls" class="controls" aria-label="أدوات التحكّم"></nav>
+      </section>
+
+      <!-- 3) العمود الجانبي -->
+      <aside class="side">
+        <section class="card cal" aria-label="تقويم الشهر">
+          <div class="cal__head">
+            <div id="calTitle" class="cal__title"></div>
+            <div id="calHijri" class="cal__hijri"></div>
+          </div>
+          <div id="calGrid" class="cal__grid"></div>
+        </section>
+        <div class="qrs">
+          <section class="card qr" id="qrProfile" aria-label="رمز بروفايل الشركة"></section>
+          <section class="card qr" id="qrContact" aria-label="رمز بطاقة الاتصال"></section>
+        </div>
+      </aside>
+    </main>
+
+    <!-- القوائم المنبثقة -->
+    <div id="overlay" class="overlay" hidden></div>
+    <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="vendor/qrcode.js"></script>
+  <script src="vendor/qrcode_UTF8.js"></script>
+  <script src="icons.js"></script>
+  <script src="device/demo.js"></script>
+  <script src="device/lg-signage.js"></script>
+  <script src="device/index.js"></script>
+  <script src="calendar.js"></script>
+  <script src="vcard.js"></script>
+  <script src="nav.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
